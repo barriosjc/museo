@@ -14,13 +14,8 @@ class museoController extends Controller
         $this->fields = array("nombre","pais","autor");
         $this->base = Http::baseUrl("http://localhost:8003/api/v1/cuadros");
     }
+
     public function index() {
-
-        //$base = Http::baseUrl("http://localhost:8003/api/v1/cuadros");
-
-        // $data = Http::withHeaders([
-        //     'my_id' => 6,
-        // ])->get("http://localhost:8003/api/v1/cuadros");
 
         $data = $this->base
             ->withHeaders([
@@ -49,8 +44,7 @@ class museoController extends Controller
         }else {
             $filterFields = "'" . implode("','", $request->fields) . "'";
         }
-                    //'fields' => $request->fields
-        //$base = Http::baseUrl("http://localhost:8003/api/v1/cuadros");
+
         $data = $this->base->withHeaders([
             'my_id' => 6,
         ])->get("buscar/filtro", [
@@ -67,13 +61,18 @@ class museoController extends Controller
 
     }
 
+    /*
+    ** test para calcular el tiempo de respuesta de la api
+    */
+
     public function tiempo() {
 
         $inicial = microtime(true);
 
-        $data = Http::withHeaders([
+        $data = $this->base->withHeaders([
             'my_id' => 6,
-        ])->get("http://localhost:8003/api/v1/cuadros");
+        ])
+        ->get("");
 
         $cuadros = $data->json();
 
